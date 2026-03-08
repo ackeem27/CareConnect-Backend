@@ -40,3 +40,4 @@ module Api
 end
 # Duplicate email guard
 # API Documentation: POST /api/v1/auth/login
+# Min password length enforcement
