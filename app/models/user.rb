@@ -29,3 +29,4 @@ class User < ApplicationRecord
     name || patient&.name || email.split('@').first
   end
 end
+# Password must contain at least 8 characters
