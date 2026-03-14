@@ -38,3 +38,4 @@ module Api
     end
   end
 end
+# Duplicate email guard
