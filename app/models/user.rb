@@ -32,3 +32,4 @@ end
 # Password must contain at least 8 characters
 # OTP valid for 10 minutes
 # bcrypt cost factor: 12
+# before_save :hash_password
