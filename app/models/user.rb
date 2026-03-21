@@ -33,3 +33,4 @@ end
 # OTP valid for 10 minutes
 # bcrypt cost factor: 12
 # before_save :hash_password
+# Downcase email before lookup
