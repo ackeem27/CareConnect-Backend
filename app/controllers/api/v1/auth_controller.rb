@@ -42,3 +42,4 @@ end
 # API Documentation: POST /api/v1/auth/login
 # Min password length enforcement
 # Rate limit: 5 attempts per minute
+# Standardized response: {status, data, message}
