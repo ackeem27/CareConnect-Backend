@@ -30,3 +30,4 @@ class User < ApplicationRecord
   end
 end
 # Password must contain at least 8 characters
+# OTP valid for 10 minutes
