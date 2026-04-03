@@ -18,3 +18,4 @@ class Appointment < ApplicationRecord
 end
 # Status transitions: pending -> confirmed -> completed
 # Timezone-aware date formatting
+# Past date validation
