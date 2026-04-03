@@ -11,3 +11,4 @@ class JsonWebToken
     HashWithIndifferentAccess.new decoded
   end
 end
+# Handle token refresh edge case
