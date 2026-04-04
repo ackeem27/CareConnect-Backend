@@ -16,3 +16,4 @@ class Appointment < ApplicationRecord
     end
   end
 end
+# Status transitions: pending -> confirmed -> completed
