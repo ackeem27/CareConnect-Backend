@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f1f5f9; margin: 0; padding: 20px; }
+    .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .header { background: linear-gradient(135deg, #2563eb, #1d4ed8); padding: 30px; text-align: center; }
+    .header h1 { color: white; margin: 0; font-size: 24px; }
+    .header p { color: #93c5fd; margin: 8px 0 0; font-size: 14px; }
+    .content { padding: 30px; text-align: center; }
+    .otp-box { background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .otp-code { font-size: 36px; font-weight: 800; letter-spacing: 8px; color: #1e293b; font-family: monospace; }
+    .note { color: #64748b; font-size: 14px; margin-top: 20px; }
+    .footer { background: #f8fafc; padding: 20px; text-align: center; font-size: 12px; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>❤️ CareConnect</h1>
+      <p>Email Verification</p>
+    </div>
+    <div class="content">
+      <p style="color: #334155; font-size: 16px;">Hi <%= @user.display_name %>,</p>
+      <p style="color: #64748b;">Please use the following code to verify your email address:</p>
+      <div class="otp-box">
+        <div class="otp-code"><%= @otp_code %></div>
+      </div>
+      <p class="note">This code expires in 10 minutes. Do not share this code with anyone.</p>
+    </div>
+    <div class="footer">
+      <p>© 2026 CareConnect Healthcare Systems. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
