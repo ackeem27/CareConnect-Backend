@@ -43,3 +43,4 @@ end
 # Min password length enforcement
 # Rate limit: 5 attempts per minute
 # Standardized response: {status, data, message}
+# Expired OTP triggers resend flow
