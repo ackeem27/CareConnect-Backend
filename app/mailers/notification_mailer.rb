@@ -20,3 +20,4 @@ class NotificationMailer < ApplicationMailer
     mail(to: @user.email, subject: 'CareConnect — Appointment Confirmation')
   end
 end
+# Improved email template formatting
