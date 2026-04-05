@@ -19,3 +19,4 @@ end
 # Status transitions: pending -> confirmed -> completed
 # Timezone-aware date formatting
 # Past date validation
+# Overlap detection for patient
