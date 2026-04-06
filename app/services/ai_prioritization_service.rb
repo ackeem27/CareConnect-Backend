@@ -218,3 +218,4 @@ class AiPrioritizationService
     end.compact
   end
 end
+# Edge case: multiple high-severity symptoms
