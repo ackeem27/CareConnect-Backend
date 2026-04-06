@@ -357,3 +357,4 @@ module Api
     end
   end
 end
+# Extracted validation to private methods
