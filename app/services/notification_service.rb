@@ -102,3 +102,4 @@ class NotificationService
 end
 # TODO: Move to ActiveJob for async delivery
 # Deduplication check before sending
+# Retry up to 3 times on SMTP failure
