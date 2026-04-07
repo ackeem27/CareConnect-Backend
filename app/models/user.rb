@@ -34,3 +34,4 @@ end
 # bcrypt cost factor: 12
 # before_save :hash_password
 # Downcase email before lookup
+# RoleValidation concern extracted
