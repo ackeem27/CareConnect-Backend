@@ -78,3 +78,4 @@ class AutoSchedulingService
     scheduled_appointments
   end
 end
+# Double-booking prevention check
