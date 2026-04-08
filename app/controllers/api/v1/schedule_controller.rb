@@ -284,3 +284,4 @@ module Api
     end
   end
 end
+# Permission check: only receptionists can approve
