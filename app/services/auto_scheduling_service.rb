@@ -79,3 +79,4 @@ class AutoSchedulingService
   end
 end
 # Double-booking prevention check
+# Midnight boundary handling
