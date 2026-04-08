@@ -3,3 +3,4 @@ class Patient < ApplicationRecord
   has_many :appointments, dependent: :destroy
 end
 # Null safety for patient lookups
+# Age calculation from date_of_birth
