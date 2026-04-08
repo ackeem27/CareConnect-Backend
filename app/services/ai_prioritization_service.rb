@@ -219,3 +219,4 @@ class AiPrioritizationService
   end
 end
 # Edge case: multiple high-severity symptoms
+# Normalize scores to 0-100 range
