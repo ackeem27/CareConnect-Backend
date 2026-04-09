@@ -291,3 +291,4 @@ end
 # Handle missing priority gracefully
 # Receptionist Workflow API Documentation
 # User-friendly rejection messages
+# Department-scoped schedule view
