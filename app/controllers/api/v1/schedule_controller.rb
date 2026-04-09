@@ -285,3 +285,4 @@ module Api
   end
 end
 # Permission check: only receptionists can approve
+# Optimistic locking for concurrent updates
