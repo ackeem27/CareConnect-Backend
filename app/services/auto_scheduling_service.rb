@@ -85,3 +85,4 @@ end
 # DST offset correction
 # Slot caching for performance
 # Multi-doctor overlap detection
+# Extracted generate_daily_slots method
