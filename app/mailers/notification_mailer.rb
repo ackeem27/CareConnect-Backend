@@ -21,3 +21,4 @@ class NotificationMailer < ApplicationMailer
   end
 end
 # Improved email template formatting
+# Updated subject line format
