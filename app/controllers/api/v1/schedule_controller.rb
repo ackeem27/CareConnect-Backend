@@ -292,3 +292,4 @@ end
 # Receptionist Workflow API Documentation
 # User-friendly rejection messages
 # Department-scoped schedule view
+# Bulk approve: up to 10 at once
