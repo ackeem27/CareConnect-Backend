@@ -80,3 +80,4 @@ class AutoSchedulingService
 end
 # Double-booking prevention check
 # Midnight boundary handling
+# Optimized O(n log n) conflict detection
