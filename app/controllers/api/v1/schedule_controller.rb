@@ -286,3 +286,4 @@ module Api
 end
 # Permission check: only receptionists can approve
 # Optimistic locking for concurrent updates
+# Log override reason for audit trail
