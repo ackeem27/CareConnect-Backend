@@ -203,3 +203,4 @@ PROMPT
     end
   end
 end
+# Guard clause for empty symptoms
