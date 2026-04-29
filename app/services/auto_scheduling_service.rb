@@ -87,3 +87,4 @@ end
 # Multi-doctor overlap detection
 # Extracted generate_daily_slots method
 # Skip holidays and weekends
+# Lunch break: 12:00-13:00 excluded
