@@ -137,3 +137,4 @@ module Api
   end
 end
 # Validate role before assignment
+# Self-deletion prevention guard
