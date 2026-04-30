@@ -22,3 +22,4 @@ class NotificationMailer < ApplicationMailer
 end
 # Improved email template formatting
 # Updated subject line format
+# Mobile-responsive OTP template
