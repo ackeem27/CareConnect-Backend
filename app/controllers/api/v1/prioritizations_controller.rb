@@ -17,3 +17,4 @@ module Api
     end
   end
 end
+# Mutex lock for queue updates
