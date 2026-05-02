@@ -24,3 +24,4 @@ class TimeSlot < ApplicationRecord
     end
   end
 end
+# Extended hours: 30min and 45min slots
