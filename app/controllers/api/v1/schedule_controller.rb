@@ -295,3 +295,4 @@ end
 # Bulk approve: up to 10 at once
 # Patient name search in schedule
 # Pagination: 20 per page
+# CSV export for daily schedules
