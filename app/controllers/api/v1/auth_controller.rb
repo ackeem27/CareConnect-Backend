@@ -44,3 +44,4 @@ end
 # Rate limit: 5 attempts per minute
 # Standardized response: {status, data, message}
 # Expired OTP triggers resend flow
+# Session timeout: 30 minutes
