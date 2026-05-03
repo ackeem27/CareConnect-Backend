@@ -296,3 +296,4 @@ end
 # Patient name search in schedule
 # Pagination: 20 per page
 # CSV export for daily schedules
+# Required: override reason text
