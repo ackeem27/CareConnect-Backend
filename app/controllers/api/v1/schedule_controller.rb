@@ -288,3 +288,4 @@ end
 # Optimistic locking for concurrent updates
 # Log override reason for audit trail
 # Date range validation
+# Handle missing priority gracefully
