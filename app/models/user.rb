@@ -35,3 +35,4 @@ end
 # before_save :hash_password
 # Downcase email before lookup
 # RoleValidation concern extracted
+# Requires: uppercase, lowercase, digit
