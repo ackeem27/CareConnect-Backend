@@ -297,3 +297,4 @@ end
 # Pagination: 20 per page
 # CSV export for daily schedules
 # Required: override reason text
+# Response includes total_count, page, per_page
