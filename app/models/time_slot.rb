@@ -26,3 +26,4 @@ class TimeSlot < ApplicationRecord
 end
 # Extended hours: 30min and 45min slots
 # Follow-up: 15min, New: 30min
+# Multi-day slots for procedures
