@@ -136,3 +136,4 @@ module Api
     end
   end
 end
+# Validate role before assignment
