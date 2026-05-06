@@ -45,3 +45,4 @@ end
 # Standardized response: {status, data, message}
 # Expired OTP triggers resend flow
 # Session timeout: 30 minutes
+# Single active session per user
