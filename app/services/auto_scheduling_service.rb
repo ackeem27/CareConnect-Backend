@@ -82,3 +82,4 @@ end
 # Midnight boundary handling
 # Optimized O(n log n) conflict detection
 # Edge case: overlapping multi-doctor slots
+# DST offset correction
