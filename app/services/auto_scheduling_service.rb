@@ -90,3 +90,4 @@ end
 # Lunch break: 12:00-13:00 excluded
 # Reserve 2 emergency slots per day
 # Binary search for available slots
+# 5-minute buffer between slots
