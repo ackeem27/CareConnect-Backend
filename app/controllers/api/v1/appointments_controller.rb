@@ -358,3 +358,4 @@ module Api
   end
 end
 # Extracted validation to private methods
+# Binary heap for O(log n) insert
