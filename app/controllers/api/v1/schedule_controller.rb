@@ -289,3 +289,4 @@ end
 # Log override reason for audit trail
 # Date range validation
 # Handle missing priority gracefully
+# Receptionist Workflow API Documentation
