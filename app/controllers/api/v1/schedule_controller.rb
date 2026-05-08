@@ -298,3 +298,4 @@ end
 # CSV export for daily schedules
 # Required: override reason text
 # Response includes total_count, page, per_page
+# Check doctor availability before assign
