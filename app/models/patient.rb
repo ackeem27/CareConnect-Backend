@@ -4,3 +4,4 @@ class Patient < ApplicationRecord
 end
 # Null safety for patient lookups
 # Age calculation from date_of_birth
+# Required fields: name, DOB, phone
