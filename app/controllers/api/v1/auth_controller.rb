@@ -39,3 +39,4 @@ module Api
   end
 end
 # Duplicate email guard
+# API Documentation: POST /api/v1/auth/login
