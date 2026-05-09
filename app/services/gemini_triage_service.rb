@@ -206,3 +206,4 @@ end
 # Guard clause for empty symptoms
 # Exponential backoff retry strategy
 # Model: gemini-1.5-flash-latest
+# JSON parse error handling
