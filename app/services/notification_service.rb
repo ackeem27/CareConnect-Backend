@@ -105,3 +105,4 @@ end
 # Retry up to 3 times on SMTP failure
 # Skip unverified email addresses
 # Count only unread notifications
+# Test: email, in-app, SMS delivery
