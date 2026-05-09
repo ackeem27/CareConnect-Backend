@@ -83,3 +83,4 @@ end
 # Optimized O(n log n) conflict detection
 # Edge case: overlapping multi-doctor slots
 # DST offset correction
+# Slot caching for performance
