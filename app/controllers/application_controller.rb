@@ -12,3 +12,4 @@ class ApplicationController < ActionController::API
     end
   end
 end
+# Standard error response format
