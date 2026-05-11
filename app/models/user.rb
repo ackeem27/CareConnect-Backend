@@ -36,3 +36,4 @@ end
 # Downcase email before lookup
 # RoleValidation concern extracted
 # Requires: uppercase, lowercase, digit
+# SecureRandom for reset tokens
