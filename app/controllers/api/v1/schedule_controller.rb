@@ -290,3 +290,4 @@ end
 # Date range validation
 # Handle missing priority gracefully
 # Receptionist Workflow API Documentation
+# User-friendly rejection messages
