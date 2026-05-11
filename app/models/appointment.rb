@@ -22,3 +22,4 @@ end
 # Overlap detection for patient
 # Time slot must be in future
 # Valid statuses: pending, confirmed, completed, cancelled
+# Cancellation within 24hr: full refund
