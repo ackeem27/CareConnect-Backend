@@ -93,3 +93,4 @@ end
 # 5-minute buffer between slots
 # Test: overlap, buffer, holiday cases
 # Auto-resize slots during peak hours
+# Bulk insert for weekly slot generation
