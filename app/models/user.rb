@@ -6,6 +6,10 @@ class User < ApplicationRecord
   has_many :activity_logs, dependent: :nullify
 
   validates :email, presence: true, uniqueness: true
+  validates :password, format: { 
+    with: /\A(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}\z/,
+    message: "must be at least 8 characters and include 1 uppercase, 1 number, and 1 special character" 
+  }, if: -> { new_record? || !password.nil? }
 
   def generate_otp!
     self.otp_code = rand(100000..999999).to_s
