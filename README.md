@@ -39,3 +39,4 @@ bundle exec rspec
 
 ##  AI Triage Engine
 The core prioritization logic is located in `app/services/ai_prioritization_service.rb`. It uses a combination of rule-based analysis and the Gemini 1.5 Flash model to calculate patient priority scores (0-100).
+
