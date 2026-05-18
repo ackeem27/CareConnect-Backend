@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # ==============================================================================
+  # CARECONNECT API ROUTING DEFINITIONS
+  # 
+  # This file defines all the endpoints available in the backend API.
+  # The API is currently versioned under the `api/v1` namespace to ensure
+  # future updates don't break older mobile or frontend clients.
+  #
+  # See https://guides.rubyonrails.org/routing.html for Rails DSL documentation
+  # ==============================================================================
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
