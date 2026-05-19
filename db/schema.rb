@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_12_010001) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_19_225605) do
   create_table "activity_logs", force: :cascade do |t|
     t.string "action", null: false
     t.datetime "created_at", null: false
@@ -33,6 +33,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_12_010001) do
     t.datetime "created_at", null: false
     t.text "diagnosis"
     t.integer "doctor_id"
+    t.text "first_aid_advice"
     t.text "notes"
     t.string "original_priority_level"
     t.integer "original_priority_score"

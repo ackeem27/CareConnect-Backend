@@ -84,15 +84,81 @@ class GeminiTriageService
           parts: [{ text: build_prompt }]
         }
       ],
+      systemInstruction: {
+        parts: [{ text: build_system_instruction }]
+      },
       generationConfig: {
         temperature: 0.1,
         maxOutputTokens: 1024,
-        responseMimeType: "application/json"
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: "OBJECT",
+          properties: {
+            priority_level: {
+              type: "STRING",
+              enum: ["HIGH", "MEDIUM", "LOW"]
+            },
+            priority_score: {
+              type: "INTEGER",
+              description: "Urgency score from 10 to 100"
+            },
+            reasoning: {
+              type: "STRING",
+              description: "Clinical justification for the priority classification (1-2 sentences)"
+            },
+            detected_symptoms: {
+              type: "ARRAY",
+              items: {
+                type: "STRING"
+              },
+              description: "List of normalized symptoms detected from the description"
+            },
+            first_aid_advice: {
+              type: "ARRAY",
+              items: {
+                type: "OBJECT",
+                properties: {
+                  symptom: { "type": "STRING" },
+                  advice: { "type": "STRING", "description": "One short, actionable first-aid instruction" }
+                },
+                required: ["symptom", "advice"]
+              },
+              description: "Short, safe first-aid advice for the detected symptoms, personalized to patient context"
+            }
+          },
+          required: ["priority_level", "priority_score", "reasoning", "detected_symptoms", "first_aid_advice"]
+        }
       }
     }
   end
 
   # ─── Prompt Engineering ─────────────────────────────────────────────────────
+
+  def build_system_instruction
+    <<~SYSTEM
+      You are a clinical triage assistant for a hospital Out-Patient Department (OPD).
+      Your sole task is to determine the urgency of the patient's case to order the waiting queue.
+      You are NOT diagnosing the patient.
+
+      ## Priority Classification
+      Classify into ONE of these OPD triage levels:
+      - HIGH (score 80–100): Potentially life-threatening, requires attention within minutes.
+        Examples: chest pain, difficulty breathing, loss of consciousness, severe bleeding, stroke signs.
+      - MEDIUM (score 50–79): Urgent but stable, should be seen within the hour.
+        Examples: high fever, vomiting, moderate pain, asthma attack, suspected fracture.
+      - LOW (score 10–49): Routine, stable, can wait in normal queue order.
+        Examples: mild headache, cold, minor rash, toothache, routine follow-up.
+
+      ## Contextual Rules (apply these):
+      - Patient aged 65+ with chest pain or breathing difficulty -> always HIGH
+      - Child under 5 with high fever or difficulty breathing -> at least MEDIUM
+      - Known hypertension/diabetes combined with chest pain, dizziness, or vision loss -> HIGH
+      - Severity 'severe' bumps score by +10 within the same level
+      - Multiple concurrent serious symptoms increase urgency
+
+      Generate appropriate, immediate, short, actionable clinical first-aid advice for each detected symptom.
+    SYSTEM
+  end
 
   def build_prompt
     symptoms_text       = Array(@symptoms).join(", ").presence || "not specified"
@@ -101,42 +167,13 @@ class GeminiTriageService
     visits_context      = @previous_visits > 0 ? "#{@previous_visits} recent visit(s)" : "first visit"
 
     <<~PROMPT
-      You are a clinical triage assistant for a hospital Out-Patient Department (OPD).
-      Your sole task is to determine the urgency of the patient's case to order the waiting queue.
-      You are NOT diagnosing the patient.
-
       ## Patient Context
       - Age: #{age_context}
       - Known chronic conditions: #{conditions_context}
       - Recent OPD visits: #{visits_context}
       - Self-reported severity: #{@severity}
       - Reported symptoms: #{symptoms_text}
-
-      ## Priority Classification
-      Classify into ONE of these OPD triage levels:
-      - **HIGH** (score 80–100): Potentially life-threatening, requires attention within minutes.
-        Examples: chest pain, difficulty breathing, loss of consciousness, severe bleeding, stroke signs.
-      - **MEDIUM** (score 50–79): Urgent but stable, should be seen within the hour.
-        Examples: high fever, vomiting, moderate pain, asthma attack, suspected fracture.
-      - **LOW** (score 10–49): Routine, stable, can wait in normal queue order.
-        Examples: mild headache, cold, minor rash, toothache, routine follow-up.
-
-      ## Contextual Rules (apply these):
-      - Patient aged 65+ with chest pain or breathing difficulty → always HIGH
-      - Child under 5 with high fever or difficulty breathing → at least MEDIUM
-      - Known hypertension/diabetes combined with chest pain, dizziness, or vision loss → HIGH
-      - Severity 'severe' bumps score by +10 within the same level
-      - Multiple concurrent serious symptoms increase urgency
-
-      ## Response Format
-      Respond with ONLY valid JSON:
-      {
-        "priority_level": "HIGH",
-        "priority_score": 95,
-        "reasoning": "Clinical justification here",
-        "detected_symptoms": ["symptom1", "symptom2"]
-      }
-PROMPT
+    PROMPT
   end
 
   # ─── Response Parsing ───────────────────────────────────────────────────────
@@ -168,6 +205,13 @@ PROMPT
     detected = Array(parsed["detected_symptoms"]).map { |s| s.to_s.downcase.strip }.reject(&:empty?)
     reasoning = parsed["reasoning"].to_s.strip.truncate(600)
 
+    first_aid = Array(parsed["first_aid_advice"]).map do |item|
+      {
+        symptom: item["symptom"].to_s.strip,
+        advice: item["advice"].to_s.strip
+      }
+    end.reject { |item| item[:symptom].empty? || item[:advice].empty? }
+
     {
       priority_level:    priority_level,
       priority_score:    priority_score,
@@ -175,7 +219,7 @@ PROMPT
       detected_symptoms: detected,
       severity_input:    @severity,
       ai_model_used:     "gemini-1.5-flash",
-      first_aid_advice:  build_first_aid(detected)
+      first_aid_advice:  first_aid
     }
   end
 
@@ -192,14 +236,5 @@ PROMPT
     
     result[:reasoning] = "Priority assigned via rule-based keyword analysis."
     result
-  end
-
-  # ─── First Aid ──────────────────────────────────────────────────────────────
-
-  def build_first_aid(symptoms)
-    symptoms.filter_map do |symptom|
-      advice = AiPrioritizationService::FIRST_AID_ADVICE[symptom]
-      { symptom: symptom, advice: advice } if advice
-    end
   end
 end

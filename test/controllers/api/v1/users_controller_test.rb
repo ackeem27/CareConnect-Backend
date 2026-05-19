@@ -5,7 +5,7 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_difference('User.count') do
       post api_v1_users_path, params: {
         email: "test_patient@example.com",
-        password: "password123",
+        password: "SecurePass123!",
         role: "patient",
         name: "Test Patient",
         phone: "1234567890",
@@ -20,7 +20,7 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should verify otp code successfully" do
-    user = User.create!(email: "otp_test@example.com", password: "password", role: "patient", name: "OTP User")
+    user = User.create!(email: "otp_test@example.com", password: "SecurePass123!", role: "patient", name: "OTP User")
     otp = user.generate_otp!
 
     post "/api/v1/users/verify_otp", params: {
@@ -35,7 +35,7 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should fail verify with invalid otp" do
-    user = User.create!(email: "otp_fail@example.com", password: "password", role: "patient", name: "OTP Fail User")
+    user = User.create!(email: "otp_fail@example.com", password: "SecurePass123!", role: "patient", name: "OTP Fail User")
     user.generate_otp!
 
     post "/api/v1/users/verify_otp", params: {
@@ -49,7 +49,7 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should verify otp case insensitively" do
-    user = User.create!(email: "UPPERCASE@example.com", password: "password", role: "patient", name: "Upper Case User")
+    user = User.create!(email: "UPPERCASE@example.com", password: "SecurePass123!", role: "patient", name: "Upper Case User")
     otp = user.generate_otp!
 
     post "/api/v1/users/verify_otp", params: {

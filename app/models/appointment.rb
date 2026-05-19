@@ -2,6 +2,7 @@ class Appointment < ApplicationRecord
   belongs_to :patient
   has_one :time_slot, dependent: :nullify
   serialize :symptoms, coder: JSON
+  serialize :first_aid_advice, coder: JSON
 
   scope :pending, -> { where(status: 'pending') }
   scope :scheduled, -> { where(status: 'scheduled') }

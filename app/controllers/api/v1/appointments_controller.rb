@@ -39,16 +39,17 @@ module Api
       ).call
 
       appointment = Appointment.new(
-        patient_id:    patient_id,
-        symptoms:      ai_result[:detected_symptoms],
-        priority_level: ai_result[:priority_level],
-        priority_score: ai_result[:priority_score],
-        severity:      ai_result[:severity_input],
-        ai_reasoning:  ai_result[:reasoning],
-        ai_model_used: ai_result[:ai_model_used],
-        status:        'pending',
-        approval_status: 'pending',
-        preferred_date: params[:preferred_date]
+        patient_id:       patient_id,
+        symptoms:         ai_result[:detected_symptoms],
+        priority_level:   ai_result[:priority_level],
+        priority_score:   ai_result[:priority_score],
+        severity:         ai_result[:severity_input],
+        ai_reasoning:     ai_result[:reasoning],
+        ai_model_used:    ai_result[:ai_model_used],
+        first_aid_advice: ai_result[:first_aid_advice],
+        status:           'pending',
+        approval_status:  'pending',
+        preferred_date:   params[:preferred_date]
       )
 
       if appointment.save
@@ -173,8 +174,8 @@ module Api
         email = "walkin_#{name.parameterize.underscore}_#{Time.now.to_i}@careconnect.local"
         user = User.create!(
           email: email,
-          password: 'walkin123',
-          password_confirmation: 'walkin123',
+          password: 'Walkin123!',
+          password_confirmation: 'Walkin123!',
           role: 'patient',
           name: name,
           email_verified: true
@@ -196,15 +197,16 @@ module Api
         ).call
 
         appointment = Appointment.create!(
-          patient_id:    patient.id,
-          symptoms:      ai_result[:detected_symptoms],
-          priority_level: ai_result[:priority_level],
-          priority_score: ai_result[:priority_score],
-          severity:      ai_result[:severity_input],
-          ai_reasoning:  ai_result[:reasoning],
-          ai_model_used: ai_result[:ai_model_used],
-          status:        'pending',
-          approval_status: 'pending'
+          patient_id:       patient.id,
+          symptoms:         ai_result[:detected_symptoms],
+          priority_level:   ai_result[:priority_level],
+          priority_score:   ai_result[:priority_score],
+          severity:         ai_result[:severity_input],
+          ai_reasoning:     ai_result[:reasoning],
+          ai_model_used:    ai_result[:ai_model_used],
+          first_aid_advice: ai_result[:first_aid_advice],
+          status:           'pending',
+          approval_status:  'pending'
         )
 
         # FR14: Auto-schedule walk-in into the current day's timeline
@@ -283,7 +285,7 @@ module Api
       private
 
       def appointment_params
-        params.require(:appointment).permit(:status, :priority_level, :priority_score, :severity, :symptoms, :diagnosis, :notes, :doctor_id, :preferred_date, :ai_reasoning, :ai_model_used)
+        params.require(:appointment).permit(:status, :priority_level, :priority_score, :severity, :symptoms, :diagnosis, :notes, :doctor_id, :preferred_date, :ai_reasoning, :ai_model_used, :first_aid_advice)
       end
 
       # Extract likely chronic conditions from a patient's diagnosis history
