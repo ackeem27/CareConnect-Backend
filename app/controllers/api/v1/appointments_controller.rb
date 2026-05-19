@@ -357,6 +357,3 @@ module Api
     end
   end
 end
-# Extracted validation to private methods
-# Binary heap for O(log n) insert
-# Walk-in patients inserted by priority

@@ -284,20 +284,3 @@ module Api
     end
   end
 end
-# Permission check: only receptionists can approve
-# Optimistic locking for concurrent updates
-# Log override reason for audit trail
-# Date range validation
-# Handle missing priority gracefully
-# Receptionist Workflow API Documentation
-# User-friendly rejection messages
-# Department-scoped schedule view
-# Bulk approve: up to 10 at once
-# Patient name search in schedule
-# Pagination: 20 per page
-# CSV export for daily schedules
-# Required: override reason text
-# Response includes total_count, page, per_page
-# Check doctor availability before assign
-# UTC to local timezone conversion
-# Test: approve, reject, override flows

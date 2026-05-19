@@ -78,19 +78,3 @@ class AutoSchedulingService
     scheduled_appointments
   end
 end
-# Double-booking prevention check
-# Midnight boundary handling
-# Optimized O(n log n) conflict detection
-# Edge case: overlapping multi-doctor slots
-# DST offset correction
-# Slot caching for performance
-# Multi-doctor overlap detection
-# Extracted generate_daily_slots method
-# Skip holidays and weekends
-# Lunch break: 12:00-13:00 excluded
-# Reserve 2 emergency slots per day
-# Binary search for available slots
-# 5-minute buffer between slots
-# Test: overlap, buffer, holiday cases
-# Auto-resize slots during peak hours
-# Bulk insert for weekly slot generation

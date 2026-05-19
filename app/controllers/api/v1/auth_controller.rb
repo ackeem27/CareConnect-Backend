@@ -38,12 +38,3 @@ module Api
     end
   end
 end
-# Duplicate email guard
-# API Documentation: POST /api/v1/auth/login
-# Min password length enforcement
-# Rate limit: 5 attempts per minute
-# Standardized response: {status, data, message}
-# Expired OTP triggers resend flow
-# Session timeout: 30 minutes
-# Single active session per user
-# Test coverage for login, register, OTP

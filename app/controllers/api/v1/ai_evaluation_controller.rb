@@ -246,4 +246,3 @@ module Api
     end
   end
 end
-# Handle partial matches in scoring

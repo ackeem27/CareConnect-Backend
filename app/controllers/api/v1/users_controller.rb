@@ -81,5 +81,3 @@ module Api
     end
   end
 end
-# Input sanitization layer
-# Email regex validation

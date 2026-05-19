@@ -16,10 +16,3 @@ class Appointment < ApplicationRecord
     end
   end
 end
-# Status transitions: pending -> confirmed -> completed
-# Timezone-aware date formatting
-# Past date validation
-# Overlap detection for patient
-# Time slot must be in future
-# Valid statuses: pending, confirmed, completed, cancelled
-# Cancellation within 24hr: full refund

@@ -33,11 +33,3 @@ class User < ApplicationRecord
     name || patient&.name || email.split('@').first
   end
 end
-# Password must contain at least 8 characters
-# OTP valid for 10 minutes
-# bcrypt cost factor: 12
-# before_save :hash_password
-# Downcase email before lookup
-# RoleValidation concern extracted
-# Requires: uppercase, lowercase, digit
-# SecureRandom for reset tokens

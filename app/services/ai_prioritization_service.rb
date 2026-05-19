@@ -218,6 +218,3 @@ class AiPrioritizationService
     end.compact
   end
 end
-# Edge case: multiple high-severity symptoms
-# Normalize scores to 0-100 range
-# Updated first aid knowledge base
