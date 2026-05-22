@@ -82,6 +82,20 @@ module Api
         render json: { message: "User #{user.email} deactivated" }, status: :ok
       end
 
+      # PATCH /api/v1/admin/users/:id/reactivate
+      def reactivate_user
+        user = User.find(params[:id])
+        user.update!(active: true)
+        NotificationService.log_activity(
+          user: @current_user,
+          action: 'user_reactivated',
+          details: "Reactivated user #{user.email}",
+          resource_type: 'User',
+          resource_id: user.id
+        )
+        render json: { message: "User #{user.email} reactivated" }, status: :ok
+      end
+
       # GET /api/v1/admin/activity_logs
       def activity_logs
         logs = ActivityLog.recent.includes(:user).limit(100)
@@ -103,6 +117,23 @@ module Api
       def configs
         configs = SystemConfig.all.order(:key)
         render json: configs, status: :ok
+      end
+
+      # GET /api/v1/admin/audit_summary
+      def audit_summary
+        today    = ActivityLog.where('created_at >= ?', Time.current.beginning_of_day).count
+        week     = ActivityLog.where('created_at >= ?', 7.days.ago).count
+        logins   = ActivityLog.where(action: 'user_login').where('created_at >= ?', 7.days.ago).count
+        failures = ActivityLog.where(action: 'login_failed').where('created_at >= ?', 7.days.ago).count
+        deactivations = ActivityLog.where(action: 'user_deactivated').where('created_at >= ?', 30.days.ago).count
+
+        render json: {
+          events_today: today,
+          events_this_week: week,
+          logins_this_week: logins,
+          failed_logins_this_week: failures,
+          deactivations_this_month: deactivations
+        }, status: :ok
       end
 
       # PATCH /api/v1/admin/configs/:id

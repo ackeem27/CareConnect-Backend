@@ -22,17 +22,66 @@ module Api
             details: "#{@user.role.capitalize} logged in: #{@user.email}"
           )
 
-          render json: { 
-            token: token, 
+          render json: {
+            token: token,
             exp: time.strftime("%m-%d-%Y %H:%M"),
             id: @user.id,
-            email: @user.email, 
+            email: @user.email,
             name: @user.display_name,
             role: @user.role,
             email_verified: @user.email_verified
           }, status: :ok
         else
           render json: { error: 'Invalid email or password' }, status: :unauthorized
+        end
+      end
+
+      # POST /api/v1/auth/forgot_password
+      def forgot_password
+        user = User.find_by(email: params[:email]&.downcase&.strip)
+
+        if user&.active?
+          # Generate a secure reset token
+          raw_token = SecureRandom.urlsafe_base64(32)
+          user.update!(
+            reset_password_token: Digest::SHA256.hexdigest(raw_token),
+            reset_password_sent_at: Time.current
+          )
+          # Deliver the reset email (mailer handles template)
+          AuthMailer.password_reset(user, raw_token).deliver_later rescue nil
+        end
+
+        # Always return success to prevent email enumeration
+        render json: { message: 'If that email address is registered, you will receive a reset link shortly.' }, status: :ok
+      end
+
+      # POST /api/v1/auth/reset_password
+      def reset_password
+        hashed = Digest::SHA256.hexdigest(params[:token].to_s)
+        user = User.find_by(reset_password_token: hashed)
+
+        if user.nil? || user.reset_password_sent_at < 15.minutes.ago
+          return render json: { error: 'Reset link is invalid or has expired.' }, status: :unprocessable_entity
+        end
+
+        if params[:password] != params[:password_confirmation]
+          return render json: { error: 'Passwords do not match.' }, status: :unprocessable_entity
+        end
+
+        if user.update(
+          password: params[:password],
+          password_confirmation: params[:password_confirmation],
+          reset_password_token: nil,
+          reset_password_sent_at: nil
+        )
+          NotificationService.log_activity(
+            user: user,
+            action: 'password_reset',
+            details: "Password was reset for #{user.email}"
+          )
+          render json: { message: 'Password has been reset successfully. You may now log in.' }, status: :ok
+        else
+          render json: { error: user.errors.full_messages.join(', ') }, status: :unprocessable_entity
         end
       end
     end

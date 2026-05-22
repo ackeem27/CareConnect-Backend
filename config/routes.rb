@@ -23,6 +23,8 @@ Rails.application.routes.draw do
 
       # Auth
       post "auth/login", to: "auth#login"
+      post "auth/forgot_password", to: "auth#forgot_password"
+      post "auth/reset_password", to: "auth#reset_password"
 
       # Users (registration + OTP)
       resources :users, only: [:index, :create]
@@ -75,9 +77,11 @@ Rails.application.routes.draw do
         get :users
         patch "users/:id", to: "admin#update_user", as: :update_user
         delete "users/:id", to: "admin#deactivate_user", as: :deactivate_user
+        patch "users/:id/reactivate", to: "admin#reactivate_user", as: :reactivate_user
         get :activity_logs
         get :configs
         patch "configs/:id", to: "admin#update_config", as: :update_config
+        get :audit_summary
       end
     end
   end
