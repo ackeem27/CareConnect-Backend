@@ -9,3 +9,6 @@
 ## 2026-05-23 — Commit 3
 - refactor: optimize database queries for queue fetching
 
+## 2026-05-23 — Commit 4
+- docs: document appointment scheduling algorithm
+
