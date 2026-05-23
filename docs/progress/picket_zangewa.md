@@ -6,3 +6,6 @@
 ## 2026-05-22 — Commit 2
 - fix: resolve race condition in queue position updates
 
+## 2026-05-23 — Commit 3
+- refactor: optimize database queries for queue fetching
+
