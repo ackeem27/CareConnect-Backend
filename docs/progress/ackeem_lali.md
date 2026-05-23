@@ -9,3 +9,6 @@
 ## 2026-05-23 — Commit 3
 - fix: resolve N+1 query in appointments index action
 
+## 2026-05-23 — Commit 4
+- docs: update API documentation for auth endpoints
+
