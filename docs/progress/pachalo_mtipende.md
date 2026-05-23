@@ -9,3 +9,6 @@
 ## 2026-05-23 — Commit 3
 - refactor: extract authentication logic into service object
 
+## 2026-05-23 — Commit 4
+- docs: add setup instructions for SMTP configuration
+
