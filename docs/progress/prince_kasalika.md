@@ -9,3 +9,6 @@
 ## 2026-05-23 — Commit 3
 - refactor: extract admin authorization into policy objects
 
+## 2026-05-23 — Commit 4
+- docs: document admin API endpoints and permissions
+
