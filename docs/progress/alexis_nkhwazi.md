@@ -9,3 +9,6 @@
 ## 2026-05-23 — Commit 3
 - refactor: move email sending logic to background job
 
+## 2026-05-23 — Commit 4
+- docs: add inline documentation for notification service
+
