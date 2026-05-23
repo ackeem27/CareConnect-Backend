@@ -6,3 +6,6 @@
 ## 2026-05-22 — Commit 2
 - fix: resolve email delivery retry logic
 
+## 2026-05-23 — Commit 3
+- refactor: extract authentication logic into service object
+
