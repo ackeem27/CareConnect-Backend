@@ -12,3 +12,6 @@
 ## 2026-05-23 — Commit 4
 - docs: document admin API endpoints and permissions
 
+## 2026-05-24 — Commit 5
+- feat: add bulk user approval endpoint for admin
+
