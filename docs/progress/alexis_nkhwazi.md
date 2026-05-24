@@ -15,3 +15,6 @@
 ## 2026-05-24 — Commit 5
 - feat: implement soft delete for user accounts
 
+## 2026-05-24 — Commit 6
+- fix: handle edge case in OTP expiration validation
+
