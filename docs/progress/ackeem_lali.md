@@ -15,3 +15,6 @@
 ## 2026-05-24 — Commit 5
 - refactor: improve error handling in appointment controller
 
+## 2026-05-24 — Commit 6
+- feat: add database indexing for frequently queried columns
+
