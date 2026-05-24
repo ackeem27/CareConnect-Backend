@@ -15,3 +15,6 @@
 ## 2026-05-24 — Commit 5
 - feat: add bulk user approval endpoint for admin
 
+## 2026-05-24 — Commit 6
+- fix: correct staff count aggregation in dashboard stats
+
