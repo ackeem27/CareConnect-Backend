@@ -12,3 +12,6 @@
 ## 2026-05-23 — Commit 4
 - docs: document appointment scheduling algorithm
 
+## 2026-05-24 — Commit 5
+- feat: implement walk-in patient registration endpoint
+
