@@ -15,3 +15,6 @@
 ## 2026-05-24 — Commit 5
 - feat: add account lockout after failed login attempts
 
+## 2026-05-24 — Commit 6
+- fix: correct password validation regex pattern
+
