@@ -12,3 +12,6 @@
 ## 2026-05-23 — Commit 4
 - docs: update API documentation for auth endpoints
 
+## 2026-05-24 — Commit 5
+- refactor: improve error handling in appointment controller
+
