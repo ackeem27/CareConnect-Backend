@@ -12,3 +12,6 @@
 ## 2026-05-23 — Commit 4
 - docs: add inline documentation for notification service
 
+## 2026-05-24 — Commit 5
+- feat: implement soft delete for user accounts
+
