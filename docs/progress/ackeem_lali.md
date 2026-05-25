@@ -18,3 +18,6 @@
 ## 2026-05-24 — Commit 6
 - feat: add database indexing for frequently queried columns
 
+## 2026-05-25 — Commit 7
+- test: add unit tests for user model validations
+
