@@ -18,3 +18,6 @@
 ## 2026-05-24 — Commit 6
 - fix: correct staff count aggregation in dashboard stats
 
+## 2026-05-25 — Commit 7
+- refactor: improve database seed file organization
+
