@@ -21,3 +21,6 @@
 ## 2026-05-25 — Commit 7
 - refactor: improve forgot password flow error messages
 
+## 2026-05-25 — Commit 8
+- test: add tests for password reset workflow
+
