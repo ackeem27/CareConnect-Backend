@@ -21,3 +21,6 @@
 ## 2026-05-25 — Commit 7
 - refactor: consolidate duplicate query scopes in models
 
+## 2026-05-25 — Commit 8
+- test: add integration tests for registration flow
+
