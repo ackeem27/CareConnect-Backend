@@ -18,3 +18,6 @@
 ## 2026-05-24 — Commit 6
 - fix: correct queue reordering after cancellation
 
+## 2026-05-25 — Commit 7
+- refactor: extract queue management into dedicated service
+
