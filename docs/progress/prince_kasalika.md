@@ -21,3 +21,6 @@
 ## 2026-05-25 — Commit 7
 - refactor: improve database seed file organization
 
+## 2026-05-25 — Commit 8
+- test: add controller tests for admin actions
+
