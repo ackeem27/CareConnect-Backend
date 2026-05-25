@@ -21,3 +21,6 @@
 ## 2026-05-25 — Commit 7
 - test: add unit tests for user model validations
 
+## 2026-05-25 — Commit 8
+- fix: correct timezone handling in appointment scheduling
+
