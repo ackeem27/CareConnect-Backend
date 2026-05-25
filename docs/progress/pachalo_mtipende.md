@@ -18,3 +18,6 @@
 ## 2026-05-24 — Commit 6
 - fix: correct password validation regex pattern
 
+## 2026-05-25 — Commit 7
+- refactor: improve forgot password flow error messages
+
