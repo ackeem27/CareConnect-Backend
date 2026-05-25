@@ -21,3 +21,6 @@
 ## 2026-05-25 — Commit 7
 - refactor: extract queue management into dedicated service
 
+## 2026-05-25 — Commit 8
+- test: add tests for appointment queue operations
+
