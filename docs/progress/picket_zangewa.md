@@ -24,3 +24,6 @@
 ## 2026-05-25 — Commit 8
 - test: add tests for appointment queue operations
 
+## 2026-05-26 — Commit 9
+- feat: add real-time queue position broadcasting
+
