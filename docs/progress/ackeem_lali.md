@@ -24,3 +24,6 @@
 ## 2026-05-25 — Commit 8
 - fix: correct timezone handling in appointment scheduling
 
+## 2026-05-26 — Commit 9
+- refactor: standardize JSON response format across controllers
+
