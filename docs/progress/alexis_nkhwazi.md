@@ -27,3 +27,6 @@
 ## 2026-05-26 — Commit 9
 - feat: add pagination support to patient listing endpoint
 
+## 2026-05-26 — Commit 10
+- fix: sanitize user input in search parameters
+
