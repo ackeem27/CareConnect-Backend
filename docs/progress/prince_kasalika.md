@@ -27,3 +27,6 @@
 ## 2026-05-26 — Commit 9
 - feat: implement activity logging for admin operations
 
+## 2026-05-26 — Commit 10
+- fix: handle concurrent approval requests gracefully
+
