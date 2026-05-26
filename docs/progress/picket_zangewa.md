@@ -27,3 +27,6 @@
 ## 2026-05-26 — Commit 9
 - feat: add real-time queue position broadcasting
 
+## 2026-05-26 — Commit 10
+- fix: handle duplicate appointment submissions
+
