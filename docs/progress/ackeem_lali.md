@@ -27,3 +27,6 @@
 ## 2026-05-26 — Commit 9
 - refactor: standardize JSON response format across controllers
 
+## 2026-05-26 — Commit 10
+- feat: implement request logging middleware for audit trail
+
