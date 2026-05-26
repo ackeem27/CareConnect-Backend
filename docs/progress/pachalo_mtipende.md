@@ -27,3 +27,6 @@
 ## 2026-05-26 — Commit 9
 - feat: implement session management with token refresh
 
+## 2026-05-26 — Commit 10
+- fix: handle expired reset tokens with clear user feedback
+
