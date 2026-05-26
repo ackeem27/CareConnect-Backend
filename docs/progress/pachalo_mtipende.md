@@ -24,3 +24,6 @@
 ## 2026-05-25 — Commit 8
 - test: add tests for password reset workflow
 
+## 2026-05-26 — Commit 9
+- feat: implement session management with token refresh
+
