@@ -14,6 +14,8 @@ services:
         generateValue: true
       - key: RAILS_LOG_TO_STDOUT
         value: "true"
+      - key: FRONTEND_URL
+        value: https://careconnect-frontend.onrender.com
       - key: GEMINI_API_KEY
         sync: false
       - key: SMTP_USERNAME
