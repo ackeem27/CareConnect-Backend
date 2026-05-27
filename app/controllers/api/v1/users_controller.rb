@@ -20,6 +20,8 @@ module Api
           otp = @user.generate_otp!
           begin
             NotificationMailer.send_otp(@user, otp).deliver_now
+            # Log OTP explicitly for easy retrieval in development environments
+            Rails.logger.info("\n[DEVELOPMENT] OTP Verification Code for #{@user.email}: #{otp}\n")
           rescue => e
             Rails.logger.error("Failed to send OTP email: #{e.message}")
           end
@@ -60,6 +62,8 @@ module Api
           otp = user.generate_otp!
           begin
             NotificationMailer.send_otp(user, otp).deliver_now
+            # Log OTP explicitly for easy retrieval in development environments
+            Rails.logger.info("\n[DEVELOPMENT] OTP Verification Code for #{user.email}: #{otp}\n")
           rescue => e
             Rails.logger.error("Failed to resend OTP: #{e.message}")
           end
