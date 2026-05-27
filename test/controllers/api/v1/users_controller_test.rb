@@ -61,4 +61,18 @@ class Api::V1::UsersControllerTest < ActionDispatch::IntegrationTest
     user.reload
     assert user.email_verified
   end
+
+  test "should resend otp successfully" do
+    user = User.create!(email: "resend_test@example.com", password: "SecurePass123!", role: "patient", name: "Resend User")
+    
+    assert_emails 1 do
+      post "/api/v1/users/resend_otp", params: {
+        email: user.email
+      }
+    end
+
+    assert_response :ok
+    json_response = JSON.parse(response.body)
+    assert_equal "OTP resent to your email", json_response["message"]
+  end
 end
