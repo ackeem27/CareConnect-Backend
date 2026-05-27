@@ -1,6 +1,7 @@
 class Appointment < ApplicationRecord
   belongs_to :patient
   has_one :time_slot, dependent: :nullify
+  has_many :lab_requests, dependent: :destroy
   serialize :symptoms, coder: JSON
   serialize :first_aid_advice, coder: JSON
 

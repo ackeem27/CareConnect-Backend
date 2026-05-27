@@ -29,7 +29,9 @@ module Api
             email: @user.email,
             name: @user.display_name,
             role: @user.role,
-            email_verified: @user.email_verified
+            email_verified: @user.email_verified,
+            approved: @user.approved,
+            avatar_url: @user.avatar_url
           }, status: :ok
         else
           render json: { error: 'Invalid email or password' }, status: :unauthorized

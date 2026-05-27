@@ -2,7 +2,7 @@ module Api
   module V1
     class AppointmentsController < ApplicationController
     before_action :authorize_request
-    skip_before_action :authorize_request, only: [:queue, :clear_all, :update, :destroy, :walkin]
+    skip_before_action :authorize_request, only: [:clear_all, :update, :destroy, :walkin]
     skip_before_action :verify_authenticity_token, raise: false
 
     # POST /api/v1/appointments
@@ -89,7 +89,13 @@ module Api
 
         all_appointments = Appointment.where(status: ['pending', 'scheduled', 'arrived', 'in_progress'])
                                       .order(priority_score: :desc, created_at: :asc)
-                                      .includes(:patient)
+                                      .includes(:patient, :lab_requests)
+
+        if @current_user.doctor?
+          all_appointments = all_appointments.where(doctor_id: @current_user.id)
+        elsif !(@current_user.receptionist? || @current_user.admin?)
+          return render json: { error: "Unauthorized. Staff access required." }, status: :forbidden
+        end
 
         total = all_appointments.count
         paginated = all_appointments.offset((page - 1) * per_page).limit(per_page)
@@ -100,7 +106,15 @@ module Api
                                     .limit(5)
                                     .select(:id, :diagnosis, :notes, :symptoms, :created_at)
 
-          appt.as_json(include: :patient).merge(past_history: past_history)
+          latest_lab = appt.lab_requests.order(created_at: :desc).first
+
+          appt.as_json(include: :patient).merge(
+            past_history: past_history,
+            lab_status: latest_lab&.status,
+            lab_results: latest_lab&.results,
+            lab_request_id: latest_lab&.id,
+            lab_tests: latest_lab&.tests
+          )
         }, status: :ok
       end
 
@@ -127,6 +141,75 @@ module Api
           render json: { error: appointment.errors.full_messages.join(', ') }, status: :unprocessable_entity
         end
       end
+
+      # POST /api/v1/appointments/:id/request_lab
+      def request_lab
+        appointment = Appointment.find(params[:id])
+        tests = params[:tests]
+        if tests.blank?
+          return render json: { error: "Please specify the lab tests to request." }, status: :bad_request
+        end
+
+        ActiveRecord::Base.transaction do
+          appointment.update!(status: 'sent_to_lab')
+          
+          appointment.lab_requests.create!(
+            patient_id: appointment.patient_id,
+            tests: tests,
+            status: 'pending'
+          )
+        end
+
+        NotificationService.log_activity(
+          user: @current_user,
+          action: 'lab_requested',
+          details: "Requested tests '#{tests}' for patient #{appointment.patient&.name}",
+          resource_type: 'Appointment',
+          resource_id: appointment.id
+        )
+
+        render json: { message: "Patient sent to pathology laboratory successfully." }, status: :ok
+      rescue => e
+        render json: { error: e.message }, status: :unprocessable_entity
+      end
+
+      # POST /api/v1/appointments/:id/recall_from_lab
+      def recall_from_lab
+        appointment = Appointment.find(params[:id])
+        
+        # Recall patient back from standby to active consulting queue
+        appointment.update!(status: 'in_progress')
+
+        NotificationService.log_activity(
+          user: @current_user,
+          action: 'lab_recalled',
+          details: "Recalled patient #{appointment.patient&.name} from lab",
+          resource_type: 'Appointment',
+          resource_id: appointment.id
+        )
+
+        render json: { message: "Patient recalled from laboratory." }, status: :ok
+      rescue => e
+        render json: { error: e.message }, status: :unprocessable_entity
+      end
+
+      # GET /api/v1/appointments/standby
+      def standby
+        appointments = Appointment.where(status: 'sent_to_lab')
+                                  .includes(:patient, :lab_requests)
+                                  .order(updated_at: :desc)
+        
+        render json: appointments.map { |appt|
+          latest_lab = appt.lab_requests.order(created_at: :desc).first
+          appt.as_json(include: :patient).merge(
+            lab_status: latest_lab&.status || 'unknown',
+            lab_results: latest_lab&.results,
+            lab_request_id: latest_lab&.id,
+            lab_tests: latest_lab&.tests
+          )
+        }, status: :ok
+      end
+
 
       # POST /api/v1/appointments/auto_schedule
       def auto_schedule

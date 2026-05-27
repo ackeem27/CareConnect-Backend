@@ -6,7 +6,43 @@ module Api
       def index
         @users = User.all
         @users = @users.where(role: params[:role]) if params[:role].present?
-        render json: @users, status: :ok
+        # Filter unapproved doctors for receptionist or other staff listings
+        if params[:role] == 'doctor' && @current_user.role != 'admin'
+          @users = @users.where(approved: true)
+        end
+        render json: @users.map { |u| user_payload(u) }, status: :ok
+      end
+
+      def update_profile
+        @user = @current_user
+        profile = profile_params
+
+        # Profile parameters can be sent via multipart form
+        @user.name = profile[:name] if profile[:name].present?
+        @user.phone = profile[:phone] if profile[:phone].present?
+
+        if profile[:password].present?
+          @user.password = profile[:password]
+          @user.password_confirmation = profile[:password_confirmation]
+        end
+
+        if profile[:avatar].present? && profile[:avatar] != 'null' && profile[:avatar] != 'undefined'
+          @user.avatar.attach(profile[:avatar])
+        end
+
+        if @user.save
+          # Sync patient record if user is a patient
+          if @user.patient? && @user.patient
+            @user.patient.update(name: @user.name, phone: @user.phone)
+          end
+
+          render json: {
+            message: 'Profile updated successfully',
+            user: user_payload(@user)
+          }, status: :ok
+        else
+          render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+        end
       end
 
       def create
@@ -75,8 +111,23 @@ module Api
 
       private
 
+      def user_payload(user)
+        user.as_json(except: [:password_digest, :otp_code, :otp_expires_at]).merge(
+          avatar_url: user.avatar_url,
+          approved: user.approved
+        )
+      end
+
       def user_params
         params.permit(:email, :password, :password_confirmation, :role, :name, :phone)
+      end
+
+      def profile_params
+        if params[:user].present?
+          params.require(:user).permit(:name, :phone, :password, :password_confirmation, :avatar)
+        else
+          params.permit(:name, :phone, :password, :password_confirmation, :avatar)
+        end
       end
 
       def patient_params

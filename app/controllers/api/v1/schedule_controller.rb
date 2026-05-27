@@ -41,7 +41,10 @@ module Api
       def approve
         appointment = Appointment.find(params[:id])
         
-        doctor_id = params[:doctor_id] || 1
+        doctor_id = params[:doctor_id].presence || User.doctor.where(approved: true, active: true).first&.id || User.doctor.where(active: true).first&.id
+        unless doctor_id
+          return render json: { error: "No available doctor found for assignment." }, status: :unprocessable_entity
+        end
         
         if params[:scheduled_at].present?
           new_time = Time.parse(params[:scheduled_at])
@@ -235,7 +238,8 @@ module Api
 
         working_start = SystemConfig.working_hours_start || "08:00"
         working_end = SystemConfig.working_hours_end || "17:00"
-        doctor_id = appointment.doctor_id || 1
+        doctor_id = appointment.doctor_id || User.doctor.where(approved: true, active: true).first&.id || User.doctor.where(active: true).first&.id
+        return nil unless doctor_id
 
         today = Date.current
         start_hour, start_min = working_start.split(':').map(&:to_i)

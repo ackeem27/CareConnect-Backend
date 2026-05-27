@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
       # Users (registration + OTP)
       resources :users, only: [:index, :create]
+      patch "users/update_profile", to: "users#update_profile"
       post "users/verify_otp", to: "users#verify_otp"
       post "users/resend_otp", to: "users#resend_otp"
 
@@ -43,14 +44,21 @@ Rails.application.routes.draw do
       resources :appointments, only: [:create, :destroy, :update] do
         member do
           post :finalize
+          post :request_lab
+          post :recall_from_lab
         end
         collection do
           get :queue
+          get :standby
           post :auto_schedule
           post :walkin
           delete :clear_all
         end
       end
+
+      # Lab Requests
+      get "lab_requests/pending", to: "lab_requests#pending"
+      post "lab_requests/:id/submit_results", to: "lab_requests#submit_results"
 
       # Schedule Management
       get "schedule", to: "schedule#index"
@@ -75,12 +83,12 @@ Rails.application.routes.draw do
       namespace :admin do
         get :stats
         get :users
-        patch "users/:id", to: "admin#update_user", as: :update_user
-        delete "users/:id", to: "admin#deactivate_user", as: :deactivate_user
-        patch "users/:id/reactivate", to: "admin#reactivate_user", as: :reactivate_user
+        patch "users/:id", to: "/api/v1/admin#update_user", as: :update_user
+        delete "users/:id", to: "/api/v1/admin#deactivate_user", as: :deactivate_user
+        patch "users/:id/reactivate", to: "/api/v1/admin#reactivate_user", as: :reactivate_user
         get :activity_logs
         get :configs
-        patch "configs/:id", to: "admin#update_config", as: :update_config
+        patch "configs/:id", to: "/api/v1/admin#update_config", as: :update_config
         get :audit_summary
       end
     end

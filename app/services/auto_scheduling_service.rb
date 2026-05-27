@@ -39,7 +39,8 @@ class AutoSchedulingService
             next
           end
 
-          doctor_id = appointment.doctor_id || 1
+          doctor_id = appointment.doctor_id || User.doctor.where(approved: true, active: true).first&.id || User.doctor.where(active: true).first&.id
+          break unless doctor_id
 
           conflicting = TimeSlot.where(doctor_id: doctor_id, status: 'booked')
                                 .where('start_time < ? AND end_time > ?', slot_start + duration, slot_start)
@@ -60,6 +61,7 @@ class AutoSchedulingService
             )
 
             appointment.update!(
+              doctor_id: doctor_id,
               status: 'scheduled',
               scheduled_at: slot_start,
               approval_status: 'approved'

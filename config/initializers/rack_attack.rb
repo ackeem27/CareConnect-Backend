@@ -1,20 +1,25 @@
 class Rack::Attack
-  # Rate limit login attempts: 5 requests per IP every 5 minutes
-  throttle('logins/ip', limit: 5, period: 5.minutes) do |req|
+  # Safelist localhost in development to avoid rate-limit lockouts
+  safelist('allow-localhost') do |req|
+    req.ip == '127.0.0.1' || req.ip == '::1'
+  end
+
+  # Rate limit login attempts: 50 requests per IP every 5 minutes
+  throttle('logins/ip', limit: 50, period: 5.minutes) do |req|
     if req.path == '/api/v1/auth/login' && req.post?
       req.ip
     end
   end
 
-  # Rate limit password resets: 3 requests per IP every 15 minutes
-  throttle('password_resets/ip', limit: 3, period: 15.minutes) do |req|
+  # Rate limit password resets: 10 requests per IP every 15 minutes
+  throttle('password_resets/ip', limit: 10, period: 15.minutes) do |req|
     if req.path == '/api/v1/auth/forgot_password' && req.post?
       req.ip
     end
   end
 
-  # Throttle all requests by IP (60 rpm)
-  throttle('req/ip', limit: 300, period: 5.minutes) do |req|
+  # Throttle all requests by IP
+  throttle('req/ip', limit: 600, period: 5.minutes) do |req|
     req.ip
   end
 

@@ -37,6 +37,7 @@ module Api
               email: u.email,
               role: u.role,
               active: u.active,
+              approved: u.approved,
               email_verified: u.email_verified,
               last_login_at: u.last_login_at,
               created_at: u.created_at
@@ -62,7 +63,7 @@ module Api
             resource_type: 'User',
             resource_id: user.id
           )
-          render json: { id: user.id, name: user.display_name, email: user.email, role: user.role, active: user.active }, status: :ok
+          render json: { id: user.id, name: user.display_name, email: user.email, role: user.role, active: user.active, approved: user.approved }, status: :ok
         else
           render json: { error: user.errors.full_messages.join(', ') }, status: :unprocessable_entity
         end
@@ -162,7 +163,7 @@ module Api
       end
 
       def admin_user_params
-        params.permit(:role, :active, :name, :email)
+        params.permit(:role, :active, :name, :email, :approved)
       end
     end
   end
