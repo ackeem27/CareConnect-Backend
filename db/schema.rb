@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_22_045500) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_27_000213) do
   create_table "activity_logs", force: :cascade do |t|
     t.string "action", null: false
     t.datetime "created_at", null: false
@@ -111,6 +111,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_22_045500) do
     t.datetime "otp_expires_at"
     t.string "password_digest"
     t.string "phone"
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
     t.integer "role"
     t.datetime "updated_at", null: false
   end
