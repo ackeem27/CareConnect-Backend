@@ -6,44 +6,44 @@ puts "🌱 Seeding CareConnect database..."
 
 # ── Default Staff Accounts ──
 admin = User.find_or_create_by!(email: 'admin@careconnect.com') do |u|
-  u.password = 'admin123'
-  u.password_confirmation = 'admin123'
+  u.password = 'Admin123!'
+  u.password_confirmation = 'Admin123!'
   u.role = 'admin'
   u.name = 'System Administrator'
   u.email_verified = true
   u.active = true
 end
-puts "  ✅ Admin: admin@careconnect.com / admin123"
+puts "  ✅ Admin: admin@careconnect.com / Admin123!"
 
 doctor = User.find_or_create_by!(email: 'doctor@careconnect.com') do |u|
-  u.password = 'doctor123'
-  u.password_confirmation = 'doctor123'
+  u.password = 'Doctor123!'
+  u.password_confirmation = 'Doctor123!'
   u.role = 'doctor'
   u.name = 'Dr. Sarah Jenkins'
   u.email_verified = true
   u.active = true
 end
-puts "  ✅ Doctor: doctor@careconnect.com / doctor123"
+puts "  ✅ Doctor: doctor@careconnect.com / Doctor123!"
 
 doctor2 = User.find_or_create_by!(email: 'dr.chen@careconnect.com') do |u|
-  u.password = 'doctor123'
-  u.password_confirmation = 'doctor123'
+  u.password = 'Doctor123!'
+  u.password_confirmation = 'Doctor123!'
   u.role = 'doctor'
   u.name = 'Dr. Chen'
   u.email_verified = true
   u.active = true
 end
-puts "  ✅ Doctor: dr.chen@careconnect.com / doctor123"
+puts "  ✅ Doctor: dr.chen@careconnect.com / Doctor123!"
 
 receptionist = User.find_or_create_by!(email: 'receptionist@careconnect.com') do |u|
-  u.password = 'receptionist123'
-  u.password_confirmation = 'receptionist123'
+  u.password = 'Receptionist123!'
+  u.password_confirmation = 'Receptionist123!'
   u.role = 'receptionist'
   u.name = 'Reception Desk'
   u.email_verified = true
   u.active = true
 end
-puts "  ✅ Receptionist: receptionist@careconnect.com / receptionist123"
+puts "  ✅ Receptionist: receptionist@careconnect.com / Receptionist123!"
 
 # ── Default System Configurations ──
 [
