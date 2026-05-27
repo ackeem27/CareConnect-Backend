@@ -82,6 +82,17 @@ Rails.application.configure do
   #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
   # ]
   #
-  # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  # Render deployment configurations
+  config.hosts.clear
+  config.action_mailer.default_url_options = { host: ENV['RENDER_EXTERNAL_HOSTNAME'] || 'localhost' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:        'smtp.gmail.com',
+    port:           587,
+    domain:         'gmail.com',
+    user_name:      ENV['SMTP_USERNAME'],
+    password:       ENV['SMTP_PASSWORD'],
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 end
