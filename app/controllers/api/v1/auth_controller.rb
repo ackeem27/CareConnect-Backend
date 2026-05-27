@@ -48,7 +48,13 @@ module Api
             reset_password_sent_at: Time.current
           )
           # Deliver the reset email (mailer handles template)
-          AuthMailer.password_reset(user, raw_token).deliver_later rescue nil
+          begin
+            AuthMailer.password_reset(user, raw_token).deliver_now
+            # Log the link explicitly for easy retrieval in development environments
+            Rails.logger.info("\n[DEVELOPMENT] Password Reset URL: #{ENV.fetch('FRONTEND_URL', 'http://localhost:3000')}/reset-password?token=#{raw_token}\n")
+          rescue => e
+            Rails.logger.error("Failed to send password reset email: #{e.message}")
+          end
         end
 
         # Always return success to prevent email enumeration
