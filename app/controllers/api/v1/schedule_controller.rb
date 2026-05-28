@@ -6,12 +6,13 @@ module Api
 
       # GET /api/v1/schedule
       def index
-        appointments = Appointment.includes(:patient, :time_slot)
+        appointments = Appointment.includes(:patient, :doctor, :time_slot)
                                   .where.not(status: 'cancelled')
                                   .order(priority_score: :desc, created_at: :asc)
 
         render json: appointments.map { |appt|
           slot = appt.time_slot
+          slot_doctor = slot&.doctor_id ? User.find_by(id: slot.doctor_id) : nil
           {
             id: appt.id,
             patient: appt.patient.as_json(only: [:id, :name, :phone, :date_of_birth]),
@@ -24,6 +25,7 @@ module Api
             diagnosis: appt.diagnosis,
             notes: appt.notes,
             doctor_id: appt.doctor_id,
+            doctor: appt.doctor&.as_json(only: [:id, :name, :email]),
             created_at: appt.created_at,
             scheduled_at: appt.scheduled_at,
             time_slot: slot ? {
@@ -31,6 +33,7 @@ module Api
               start_time: slot.start_time,
               end_time: slot.end_time,
               doctor_id: slot.doctor_id,
+              doctor: slot_doctor&.as_json(only: [:id, :name, :email]),
               status: slot.status
             } : nil
           }

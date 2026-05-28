@@ -1,5 +1,6 @@
 class Appointment < ApplicationRecord
   belongs_to :patient
+  belongs_to :doctor, class_name: "User", optional: true
   has_one :time_slot, dependent: :nullify
   has_many :lab_requests, dependent: :destroy
   serialize :symptoms, coder: JSON

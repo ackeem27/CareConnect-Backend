@@ -78,8 +78,19 @@ module Api
         patient = @current_user.patient
         return render json: [] unless patient
         
-        appointments = patient.appointments.order(created_at: :desc)
-        render json: appointments, status: :ok
+        appointments = patient.appointments.includes(:doctor, :lab_requests).order(created_at: :desc)
+        render json: appointments.map { |appt|
+          latest_lab = appt.lab_requests.order(created_at: :desc).first
+          appt.as_json.merge(
+            patient: patient.as_json(only: [:id, :name, :phone, :date_of_birth]),
+            doctor: appt.doctor&.as_json(only: [:id, :name, :email]),
+            lab_status: latest_lab&.status,
+            lab_results: latest_lab&.results,
+            lab_request_id: latest_lab&.id,
+            lab_tests: latest_lab&.tests,
+            lab_requested_at: latest_lab&.created_at
+          )
+        }, status: :ok
       end
 
       # GET /api/v1/appointments/queue
