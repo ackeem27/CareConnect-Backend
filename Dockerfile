@@ -74,7 +74,7 @@ COPY --chown=rails:rails --from=build /rails /rails
 RUN mkdir -p db log storage tmp && \
     chown -R rails:rails db log storage tmp
 
-USER 1000:1000
+# USER 1000:1000
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
