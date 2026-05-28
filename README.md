@@ -32,6 +32,35 @@ rails s -p 3001
 ```
 The API will be available at `http://localhost:3001`.
 
+##  Northflank Deployment
+
+Deploy this repository as a Dockerfile service:
+
+- Dockerfile path: `Dockerfile`
+- Build context: repository root
+- Health check path: `/up`
+
+Required production environment variables:
+
+```env
+RAILS_ENV=production
+RAILS_LOG_TO_STDOUT=true
+SECRET_KEY_BASE=<generated secret>
+DATABASE_URL=<Northflank PostgreSQL connection string>
+FRONTEND_URL=https://<your-frontend-public-url>
+```
+
+Optional environment variables:
+
+```env
+GEMINI_API_KEY=<google gemini api key>
+SMTP_USERNAME=<smtp username>
+SMTP_PASSWORD=<smtp password>
+MAIL_FROM=<sender email>
+```
+
+After deployment, verify `https://<your-backend-public-url>/api/v1/health`.
+
 ##  Testing
 ```bash
 bundle exec rspec
