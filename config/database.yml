@@ -38,15 +38,21 @@ production:
   cache:
     adapter: <%= ENV['DATABASE_URL'] ? 'postgresql' : 'sqlite3' %>
     url: <%= ENV['DATABASE_URL'] %>
-    database: <%= ENV['DATABASE_URL'] ? nil : 'storage/production_cache.sqlite3' %>
+    <% unless ENV['DATABASE_URL'] %>
+    database: storage/production_cache.sqlite3
+    <% end %>
     migrations_paths: db/cache_migrate
   queue:
     adapter: <%= ENV['DATABASE_URL'] ? 'postgresql' : 'sqlite3' %>
     url: <%= ENV['DATABASE_URL'] %>
-    database: <%= ENV['DATABASE_URL'] ? nil : 'storage/production_queue.sqlite3' %>
+    <% unless ENV['DATABASE_URL'] %>
+    database: storage/production_queue.sqlite3
+    <% end %>
     migrations_paths: db/queue_migrate
   cable:
     adapter: <%= ENV['DATABASE_URL'] ? 'postgresql' : 'sqlite3' %>
     url: <%= ENV['DATABASE_URL'] %>
-    database: <%= ENV['DATABASE_URL'] ? nil : 'storage/production_cable.sqlite3' %>
+    <% unless ENV['DATABASE_URL'] %>
+    database: storage/production_cable.sqlite3
+    <% end %>
     migrations_paths: db/cable_migrate
