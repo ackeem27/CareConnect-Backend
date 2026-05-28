@@ -48,6 +48,14 @@ class CustomDebugMiddleware
           ActiveRecord::Base.establish_connection
           ActiveRecord::Base.connection.execute("SELECT 1")
           report << "ActiveRecord connection check: SUCCESS!"
+          begin
+            report << "Tables: #{ActiveRecord::Base.connection.tables.join(', ')}"
+            report << "User count: #{User.count}"
+          rescue => err
+            report << "ActiveRecord query check: FAILED!"
+            report << "Query check error class: #{err.class}"
+            report << "Query check error message: #{err.message}"
+          end
         rescue => e
           report << "ActiveRecord connection check: FAILED!"
           report << "Error class: #{e.class}"
