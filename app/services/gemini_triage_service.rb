@@ -60,7 +60,7 @@ class GeminiTriageService
     uri = URI("#{GEMINI_API_URL}?key=#{api_key}")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl     = true
-    http.read_timeout = 12
+    http.read_timeout = 20
     http.open_timeout = 6
 
     request = Net::HTTP::Post.new(uri)
@@ -89,7 +89,7 @@ class GeminiTriageService
       },
       generationConfig: {
         temperature: 0.1,
-        maxOutputTokens: 1024,
+        maxOutputTokens: 2048,
         responseMimeType: "application/json",
         responseSchema: {
           type: "OBJECT",
@@ -104,7 +104,7 @@ class GeminiTriageService
             },
             reasoning: {
               type: "STRING",
-              description: "Clinical justification for the priority classification (1-2 sentences)"
+              description: "Clinical justification for the priority classification. MUST be strictly 1 sentence."
             },
             detected_symptoms: {
               type: "ARRAY",
@@ -139,6 +139,11 @@ class GeminiTriageService
       You are a clinical triage assistant for a hospital Out-Patient Department (OPD).
       Your sole task is to determine the urgency of the patient's case to order the waiting queue.
       You are NOT diagnosing the patient.
+
+      ## Critical JSON Output Rules:
+      - Keep all generated text extremely short and concise to ensure complete JSON output.
+      - The `reasoning` field must be strictly 1 short sentence.
+      - Keep each `advice` field in `first_aid_advice` to strictly 1 short sentence.
 
       ## Priority Classification
       Classify into ONE of these OPD triage levels:
