@@ -1,6 +1,7 @@
 services:
   - type: web
     name: careconnect-backend
+    region: oregon
     runtime: docker
     plan: free
     envVars:
@@ -27,4 +28,5 @@ services:
 
 databases:
   - name: careconnect-db
+    region: oregon
     plan: free
